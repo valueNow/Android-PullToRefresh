@@ -1,2 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<merger version="3"><dataSet config="debug"><source path="/Users/yanghj/git/Android-PullToRefresh/refreshlibrary/build/intermediates/bundles/debug/assets"/></dataSet><dataSet config="main"><source path="/Users/yanghj/git/Android-PullToRefresh/refreshlibrary/src/androidTest/assets"/><source path="/Users/yanghj/git/Android-PullToRefresh/refreshlibrary/build/generated/assets/shaders/androidTest/debug"/></dataSet></merger>

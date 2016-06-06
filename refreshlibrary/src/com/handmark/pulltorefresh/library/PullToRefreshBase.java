@@ -1,12 +1,12 @@
 /*******************************************************************************
  * Copyright 2011, 2012 Chris Banes.
- * <p>
+ * <p/>
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * <p>
+ * <p/>
  * http://www.apache.org/licenses/LICENSE-2.0
- * <p>
+ * <p/>
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -120,8 +120,7 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout
         init(context, null);
     }
 
-    public PullToRefreshBase(Context context, Mode mode,
-                             AnimationStyle animStyle) {
+    public PullToRefreshBase(Context context, Mode mode, AnimationStyle animStyle) {
         super(context);
         mMode = mode;
         mLoadingAnimationStyle = animStyle;
@@ -173,8 +172,7 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout
     }
 
     @Override
-    public final ILoadingLayout getLoadingLayoutProxy(boolean includeStart,
-                                                      boolean includeEnd) {
+    public final ILoadingLayout getLoadingLayoutProxy(boolean includeStart, boolean includeEnd) {
         return createLoadingLayoutProxy(includeStart, includeEnd);
     }
 
@@ -986,9 +984,9 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout
                 .min(maximumPullScroll, Math.max(-maximumPullScroll, value));
 
         if (mLayoutVisibilityChangesEnabled) {
-            if (value < 0) {
+            if (value < 0) {//向下滑
                 mHeaderLayout.setVisibility(View.VISIBLE);
-            } else if (value > 0) {
+            } else if (value > 0) {//向上滑
                 mFooterLayout.setVisibility(View.VISIBLE);
             } else {
                 mHeaderLayout.setVisibility(View.INVISIBLE);

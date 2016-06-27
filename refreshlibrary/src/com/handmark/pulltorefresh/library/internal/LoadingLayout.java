@@ -35,6 +35,7 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.ant.liao.GifView;
 import com.handmark.pulltorefresh.library.ILoadingLayout;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.Mode;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.Orientation;
@@ -49,7 +50,8 @@ public abstract class LoadingLayout extends FrameLayout implements ILoadingLayou
 
     private FrameLayout mInnerLayout;
 
-    protected final ImageView mHeaderImage;
+   // protected final ImageView mHeaderImage;
+   protected final GifView mHeaderGif;
     protected final ProgressBar mHeaderProgress;
 
     private boolean mUseIntrinsicAnimation;
@@ -63,9 +65,12 @@ public abstract class LoadingLayout extends FrameLayout implements ILoadingLayou
     private CharSequence mPullLabel;
     private CharSequence mRefreshingLabel;
     private CharSequence mReleaseLabel;
+    //0 默认 1 女生 2 男生
+    private int sexFlag = 0;
 
-    public LoadingLayout(Context context, final Mode mode, final Orientation scrollDirection, TypedArray attrs) {
+    public LoadingLayout(Context context, final Mode mode, final Orientation scrollDirection, TypedArray attrs,int sexFlag) {
         super(context);
+        sexFlag = sexFlag;
         mMode = mode;
         mScrollDirection = scrollDirection;
 
@@ -83,7 +88,8 @@ public abstract class LoadingLayout extends FrameLayout implements ILoadingLayou
         mHeaderText = (TextView) mInnerLayout.findViewById(R.id.pull_to_refresh_text);
         mHeaderProgress = (ProgressBar) mInnerLayout.findViewById(R.id.pull_to_refresh_progress);
         mSubHeaderText = (TextView) mInnerLayout.findViewById(R.id.pull_to_refresh_sub_text);
-        mHeaderImage = (ImageView) mInnerLayout.findViewById(R.id.pull_to_refresh_image);
+       // mHeaderImage = (ImageView) mInnerLayout.findViewById(R.id.pull_to_refresh_image);
+        mHeaderGif = (GifView) mInnerLayout.findViewById(R.id.pull_to_refresh_image);
 
         FrameLayout.LayoutParams lp = (FrameLayout.LayoutParams) mInnerLayout.getLayoutParams();
 
@@ -142,6 +148,7 @@ public abstract class LoadingLayout extends FrameLayout implements ILoadingLayou
 
         // Try and get defined drawable from Attrs
         Drawable imageDrawable = null;
+        int gifId = 0;
         if (attrs.hasValue(R.styleable.PullToRefresh_ptrDrawable)) {
             imageDrawable = attrs.getDrawable(R.styleable.PullToRefresh_ptrDrawable);
         }
@@ -157,6 +164,11 @@ public abstract class LoadingLayout extends FrameLayout implements ILoadingLayou
                     Utils.warnDeprecation("ptrDrawableTop", "ptrDrawableStart");
                     imageDrawable = attrs.getDrawable(R.styleable.PullToRefresh_ptrDrawableTop);
                 }
+                if(sexFlag == 1){
+                    gifId = R.drawable.new_girl;
+                }else{
+                    gifId = R.drawable.new_boy;
+                }
                 break;
 
             case PULL_FROM_END:
@@ -166,6 +178,7 @@ public abstract class LoadingLayout extends FrameLayout implements ILoadingLayou
                     Utils.warnDeprecation("ptrDrawableBottom", "ptrDrawableEnd");
                     imageDrawable = attrs.getDrawable(R.styleable.PullToRefresh_ptrDrawableBottom);
                 }
+                gifId = R.drawable.new_boy;
                 break;
         }
 
@@ -175,7 +188,13 @@ public abstract class LoadingLayout extends FrameLayout implements ILoadingLayou
         }
 
         // Set Drawable, and save width/height
-        setLoadingDrawable(imageDrawable);
+       // setLoadingDrawable(imageDrawable);
+        if(gifId == 0){
+            setLoadingGif(R.drawable.new_boy,context);
+        }else{
+            setLoadingGif(gifId,context);
+        }
+
 
         reset();
     }
@@ -210,8 +229,11 @@ public abstract class LoadingLayout extends FrameLayout implements ILoadingLayou
         if (View.VISIBLE == mHeaderProgress.getVisibility()) {
             mHeaderProgress.setVisibility(View.INVISIBLE);
         }
-        if (View.VISIBLE == mHeaderImage.getVisibility()) {
+       /* if (View.VISIBLE == mHeaderImage.getVisibility()) {
             mHeaderImage.setVisibility(View.INVISIBLE);
+        }*/
+        if (View.VISIBLE == mHeaderGif.getVisibility()) {
+            mHeaderGif.setVisibility(View.INVISIBLE);
         }
         if (View.VISIBLE == mSubHeaderText.getVisibility()) {
             mSubHeaderText.setVisibility(View.INVISIBLE);
@@ -219,9 +241,9 @@ public abstract class LoadingLayout extends FrameLayout implements ILoadingLayou
     }
 
     public final void onPull(float scaleOfLayout) {
-        if (!mUseIntrinsicAnimation) {
+        /*if (!mUseIntrinsicAnimation) {
             onPullImpl(scaleOfLayout);
-        }
+        }*/
     }
 
     public final void pullToRefresh() {
@@ -230,7 +252,7 @@ public abstract class LoadingLayout extends FrameLayout implements ILoadingLayou
         }
 
         // Now call the callback
-        pullToRefreshImpl();
+       // pullToRefreshImpl();
     }
 
     public final void refreshing() {
@@ -238,12 +260,12 @@ public abstract class LoadingLayout extends FrameLayout implements ILoadingLayou
             mHeaderText.setText(mRefreshingLabel);
         }
 
-        if (mUseIntrinsicAnimation) {
+       /* if (mUseIntrinsicAnimation) {
             ((AnimationDrawable) mHeaderImage.getDrawable()).start();
         } else {
             // Now call the callback
             refreshingImpl();
-        }
+        }*/
 
         if (null != mSubHeaderText) {
             mSubHeaderText.setVisibility(View.GONE);
@@ -263,14 +285,15 @@ public abstract class LoadingLayout extends FrameLayout implements ILoadingLayou
         if (null != mHeaderText) {
             mHeaderText.setText(mPullLabel);
         }
-        mHeaderImage.setVisibility(View.VISIBLE);
+       // mHeaderImage.setVisibility(View.VISIBLE);
+        mHeaderGif.setVisibility(View.VISIBLE);
 
-        if (mUseIntrinsicAnimation) {
+       /* if (mUseIntrinsicAnimation) {
             ((AnimationDrawable) mHeaderImage.getDrawable()).stop();
         } else {
             // Now call the callback
             resetImpl();
-        }
+        }*/
 
         if (null != mSubHeaderText) {
             if (TextUtils.isEmpty(mSubHeaderText.getText())) {
@@ -289,11 +312,22 @@ public abstract class LoadingLayout extends FrameLayout implements ILoadingLayou
 
     public final void setLoadingDrawable(Drawable imageDrawable) {
         // Set Drawable
-        mHeaderImage.setImageDrawable(imageDrawable);
-        mUseIntrinsicAnimation = (imageDrawable instanceof AnimationDrawable);
+       // mHeaderImage.setImageDrawable(imageDrawable);
+        /*mUseIntrinsicAnimation = (imageDrawable instanceof AnimationDrawable);
 
         // Now call the callback
-        onLoadingDrawableSet(imageDrawable);
+        onLoadingDrawableSet(imageDrawable);*/
+    }
+    public final void setLoadingGif(int id,Context context) {
+        // Set Drawable
+        // mHeaderImage.setImageDrawable(imageDrawable);
+        /*mUseIntrinsicAnimation = (imageDrawable instanceof AnimationDrawable);
+
+        // Now call the callback
+        onLoadingDrawableSet(imageDrawable);*/
+        mHeaderGif.setGifImage(id);
+        mHeaderGif.setShowDimension(dip2px(context,60),dip2px(context,60));
+        mHeaderGif.setGifImageType(GifView.GifImageType.COVER);
     }
 
     public void setPullLabel(CharSequence pullLabel) {
@@ -323,14 +357,20 @@ public abstract class LoadingLayout extends FrameLayout implements ILoadingLayou
         if (View.INVISIBLE == mHeaderProgress.getVisibility()) {
             mHeaderProgress.setVisibility(View.VISIBLE);
         }
-        if (View.INVISIBLE == mHeaderImage.getVisibility()) {
+       /* if (View.INVISIBLE == mHeaderImage.getVisibility()) {
             mHeaderImage.setVisibility(View.VISIBLE);
+        }*/
+        if (View.INVISIBLE == mHeaderGif.getVisibility()) {
+            mHeaderGif.setVisibility(View.VISIBLE);
         }
         if (View.INVISIBLE == mSubHeaderText.getVisibility()) {
             mSubHeaderText.setVisibility(View.VISIBLE);
         }
     }
-
+    public static int dip2px(Context context, float dpValue) {
+        final float scale = context.getResources().getDisplayMetrics().density;
+        return (int) (dpValue * scale + 0.5f);
+    }
     /**
      * Callbacks for derivative Layouts
      */

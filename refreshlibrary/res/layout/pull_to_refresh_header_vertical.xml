@@ -8,17 +8,19 @@
         android:paddingBottom="@dimen/header_footer_top_bottom_padding"
         android:paddingLeft="@dimen/header_footer_left_right_padding"
         android:paddingRight="@dimen/header_footer_left_right_padding"
-        android:paddingTop="@dimen/header_footer_top_bottom_padding">
+        android:paddingTop="@dimen/header_footer_top_bottom_padding"
+        android:background="#88cccccc"
+        >
 
         <FrameLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="left|center_vertical">
 
-            <ImageView
+            <com.ant.liao.GifView
                 android:id="@+id/pull_to_refresh_image"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
                 android:layout_gravity="center" />
 
             <ProgressBar

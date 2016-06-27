@@ -31,19 +31,19 @@ public class RotateLoadingLayout extends LoadingLayout {
 
 	static final int ROTATION_ANIMATION_DURATION = 1200;
 
-	private final Animation mRotateAnimation;
-	private final Matrix mHeaderImageMatrix;
+	//private final Animation mRotateAnimation;
+	//private final Matrix mHeaderImageMatrix;
 
 	private float mRotationPivotX, mRotationPivotY;
 
 	private final boolean mRotateDrawableWhilePulling;
 
-	public RotateLoadingLayout(Context context, Mode mode, Orientation scrollDirection, TypedArray attrs) {
-		super(context, mode, scrollDirection, attrs);
+	public RotateLoadingLayout(Context context, Mode mode, Orientation scrollDirection, TypedArray attrs,int sexFlag) {
+		super(context, mode, scrollDirection, attrs,sexFlag);
 
 		mRotateDrawableWhilePulling = attrs.getBoolean(R.styleable.PullToRefresh_ptrRotateDrawableWhilePulling, true);
 
-		mHeaderImage.setScaleType(ScaleType.MATRIX);
+		/*mHeaderImage.setScaleType(ScaleType.MATRIX);
 		mHeaderImageMatrix = new Matrix();
 		mHeaderImage.setImageMatrix(mHeaderImageMatrix);
 
@@ -52,7 +52,7 @@ public class RotateLoadingLayout extends LoadingLayout {
 		mRotateAnimation.setInterpolator(ANIMATION_INTERPOLATOR);
 		mRotateAnimation.setDuration(ROTATION_ANIMATION_DURATION);
 		mRotateAnimation.setRepeatCount(Animation.INFINITE);
-		mRotateAnimation.setRepeatMode(Animation.RESTART);
+		mRotateAnimation.setRepeatMode(Animation.RESTART);*/
 	}
 
 	public void onLoadingDrawableSet(Drawable imageDrawable) {
@@ -63,7 +63,7 @@ public class RotateLoadingLayout extends LoadingLayout {
 	}
 
 	protected void onPullImpl(float scaleOfLayout) {
-		float angle;
+		/*float angle;
 		if (mRotateDrawableWhilePulling) {
 			angle = scaleOfLayout * 90f;
 		} else {
@@ -71,25 +71,25 @@ public class RotateLoadingLayout extends LoadingLayout {
 		}
 
 		mHeaderImageMatrix.setRotate(angle, mRotationPivotX, mRotationPivotY);
-		mHeaderImage.setImageMatrix(mHeaderImageMatrix);
+		mHeaderImage.setImageMatrix(mHeaderImageMatrix);*/
 	}
 
 	@Override
 	protected void refreshingImpl() {
-		mHeaderImage.startAnimation(mRotateAnimation);
+		//mHeaderImage.startAnimation(mRotateAnimation);
 	}
 
 	@Override
 	protected void resetImpl() {
-		mHeaderImage.clearAnimation();
-		resetImageRotation();
+		/*mHeaderImage.clearAnimation();
+		resetImageRotation();*/
 	}
 
 	private void resetImageRotation() {
-		if (null != mHeaderImageMatrix) {
+		/*if (null != mHeaderImageMatrix) {
 			mHeaderImageMatrix.reset();
 			mHeaderImage.setImageMatrix(mHeaderImageMatrix);
-		}
+		}*/
 	}
 
 	@Override

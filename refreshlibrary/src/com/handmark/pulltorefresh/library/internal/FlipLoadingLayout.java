@@ -38,7 +38,7 @@ public class FlipLoadingLayout extends LoadingLayout {
 	private final Animation mRotateAnimation, mResetRotateAnimation;
 
 	public FlipLoadingLayout(Context context, final Mode mode, final Orientation scrollDirection, TypedArray attrs) {
-		super(context, mode, scrollDirection, attrs);
+		super(context, mode, scrollDirection, attrs,0);
 
 		final int rotateAngle = mode == Mode.PULL_FROM_START ? -180 : 180;
 
@@ -66,19 +66,19 @@ public class FlipLoadingLayout extends LoadingLayout {
 			 * square with each side the size of the largest drawable dimension.
 			 * This is so that it doesn't clip when rotated.
 			 */
-			ViewGroup.LayoutParams lp = mHeaderImage.getLayoutParams();
+			/*ViewGroup.LayoutParams lp = mHeaderImage.getLayoutParams();
 			lp.width = lp.height = Math.max(dHeight, dWidth);
 			mHeaderImage.requestLayout();
 
-			/**
+			*//**
 			 * We now rotate the Drawable so that is at the correct rotation,
 			 * and is centered.
-			 */
+			 *//*
 			mHeaderImage.setScaleType(ScaleType.MATRIX);
 			Matrix matrix = new Matrix();
 			matrix.postTranslate((lp.width - dWidth) / 2f, (lp.height - dHeight) / 2f);
 			matrix.postRotate(getDrawableRotationAngle(), lp.width / 2f, lp.height / 2f);
-			mHeaderImage.setImageMatrix(matrix);
+			mHeaderImage.setImageMatrix(matrix);*/
 		}
 	}
 
@@ -90,28 +90,28 @@ public class FlipLoadingLayout extends LoadingLayout {
 	@Override
 	protected void pullToRefreshImpl() {
 		// Only start reset Animation, we've previously show the rotate anim
-		if (mRotateAnimation == mHeaderImage.getAnimation()) {
+		/*if (mRotateAnimation == mHeaderImage.getAnimation()) {
 			mHeaderImage.startAnimation(mResetRotateAnimation);
-		}
+		}*/
 	}
 
 	@Override
 	protected void refreshingImpl() {
-		mHeaderImage.clearAnimation();
+		/*mHeaderImage.clearAnimation();
 		mHeaderImage.setVisibility(View.INVISIBLE);
-		mHeaderProgress.setVisibility(View.VISIBLE);
+		mHeaderProgress.setVisibility(View.VISIBLE);*/
 	}
 
 	@Override
 	protected void releaseToRefreshImpl() {
-		mHeaderImage.startAnimation(mRotateAnimation);
+		/*mHeaderImage.startAnimation(mRotateAnimation);*/
 	}
 
 	@Override
 	protected void resetImpl() {
-		mHeaderImage.clearAnimation();
+		/*mHeaderImage.clearAnimation();
 		mHeaderProgress.setVisibility(View.GONE);
-		mHeaderImage.setVisibility(View.VISIBLE);
+		mHeaderImage.setVisibility(View.VISIBLE);*/
 	}
 
 	@Override

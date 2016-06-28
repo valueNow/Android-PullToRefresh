@@ -178,7 +178,11 @@ public abstract class LoadingLayout extends FrameLayout implements ILoadingLayou
                     Utils.warnDeprecation("ptrDrawableBottom", "ptrDrawableEnd");
                     imageDrawable = attrs.getDrawable(R.styleable.PullToRefresh_ptrDrawableBottom);
                 }
-                gifId = R.drawable.new_boy;
+                if(sexFlag == 2){
+                    gifId = R.drawable.new_girl;
+                }else{
+                    gifId = R.drawable.new_boy;
+                }
                 break;
         }
 
@@ -189,12 +193,21 @@ public abstract class LoadingLayout extends FrameLayout implements ILoadingLayou
 
         // Set Drawable, and save width/height
        // setLoadingDrawable(imageDrawable);
-        if(gifId == 0){
-            setLoadingGif(R.drawable.new_boy,context);
-        }else{
-            setLoadingGif(gifId,context);
-        }
+        setLoadingGif(gifId,context);
         reset();
+    }
+    public void resetSexFlag(int sexFlag){
+        int gifId = 0;
+        if(sexFlag == 2){
+            gifId = R.drawable.new_girl;
+        }else{
+            gifId = R.drawable.new_boy;
+        }
+        if(gifId == 0){
+            mHeaderGif.setGifImage(R.drawable.new_boy);
+        }else{
+            mHeaderGif.setGifImage(gifId);
+        }
     }
 
     public final void setHeight(int height) {
@@ -242,6 +255,7 @@ public abstract class LoadingLayout extends FrameLayout implements ILoadingLayou
         /*if (!mUseIntrinsicAnimation) {
             onPullImpl(scaleOfLayout);
         }*/
+        onPullImpl(scaleOfLayout);
     }
 
     public final void pullToRefresh() {
@@ -323,7 +337,11 @@ public abstract class LoadingLayout extends FrameLayout implements ILoadingLayou
 
         // Now call the callback
         onLoadingDrawableSet(imageDrawable);*/
-        mHeaderGif.setGifImage(id);
+        if(id == 0){
+            mHeaderGif.setGifImage(R.drawable.new_boy);
+        }else{
+            mHeaderGif.setGifImage(id);
+        }
         mHeaderGif.setShowDimension(dip2px(context,60),dip2px(context,60));
         mHeaderGif.setGifImageType(GifView.GifImageType.COVER);
     }

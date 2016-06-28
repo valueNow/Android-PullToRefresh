@@ -37,6 +37,7 @@ public class RotateLoadingLayout extends LoadingLayout {
 	private float mRotationPivotX, mRotationPivotY;
 
 	private final boolean mRotateDrawableWhilePulling;
+	private int sexFlag = 0;
 
 	public RotateLoadingLayout(Context context, Mode mode, Orientation scrollDirection, TypedArray attrs,int sexFlag) {
 		super(context, mode, scrollDirection, attrs,sexFlag);

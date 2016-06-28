@@ -164,8 +164,10 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout
     public final int getSexFlag(){
         return sexFlag;
     }
-    public void setSexFlag(int sexFlag){
+    public void setSexFlag(Context context,int sexFlag){
         this.sexFlag = sexFlag;
+       /* mHeaderLayout.resetSexFlag(sexFlag);
+        mFooterLayout.resetSexFlag(sexFlag);*/
     }
     @Override
     public final boolean getFilterTouchEvents() {

@@ -65,7 +65,7 @@ public abstract class LoadingLayout extends FrameLayout implements ILoadingLayou
     private CharSequence mPullLabel;
     private CharSequence mRefreshingLabel;
     private CharSequence mReleaseLabel;
-    //0 默认 1 女生 2 男生
+    //0 默认 1 男生 2 女生
     private int sexFlag = 0;
 
     public LoadingLayout(Context context, final Mode mode, final Orientation scrollDirection, TypedArray attrs,int sexFlag) {
@@ -164,7 +164,7 @@ public abstract class LoadingLayout extends FrameLayout implements ILoadingLayou
                     Utils.warnDeprecation("ptrDrawableTop", "ptrDrawableStart");
                     imageDrawable = attrs.getDrawable(R.styleable.PullToRefresh_ptrDrawableTop);
                 }
-                if(sexFlag == 1){
+                if(sexFlag == 2){
                     gifId = R.drawable.new_girl;
                 }else{
                     gifId = R.drawable.new_boy;
@@ -194,8 +194,6 @@ public abstract class LoadingLayout extends FrameLayout implements ILoadingLayou
         }else{
             setLoadingGif(gifId,context);
         }
-
-
         reset();
     }
 
